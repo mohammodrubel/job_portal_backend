@@ -1,10 +1,12 @@
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
+import { userExperienceService } from './userExperience.service';
 
 // Create User Experience
 const createUserExperience = catchAsync(async (req, res) => {
-  const result = ''; // Your service logic here
+  const userId = req.user?.id;  
+  const result = userExperienceService.createUserExperience(req.body, userId);
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.CREATED,
@@ -14,20 +16,9 @@ const createUserExperience = catchAsync(async (req, res) => {
 });
 
 // Get All User Experiences
-const getAllUserExperiences = catchAsync(async (req, res) => {
-  const result = ''; // Your service logic here
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'User experiences retrieved successfully',
-    data: result,
-  });
-});
-
-// Get Single User Experience by ID
-const getSingleUserExperience = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = ''; // Your service logic here
+const getSingleUserInfo = catchAsync(async (req, res) => {
+  const userId = req.user?.id;  
+  const result = userExperienceService.getSingleUserInfo(userId);
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -36,35 +27,10 @@ const getSingleUserExperience = catchAsync(async (req, res) => {
   });
 });
 
-// Update User Experience
-const updateUserExperience = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = ''; // Your service logic here
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'User experience updated successfully',
-    data: result,
-  });
-});
-
-// Delete User Experience
-const deleteUserExperience = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = ''; // Your service logic here
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'User experience deleted successfully',
-    data: result,
-  });
-});
 
 // Export all user experience controllers
 export const userExperienceController = {
   createUserExperience,
-  getAllUserExperiences,
-  getSingleUserExperience,
-  updateUserExperience,
-  deleteUserExperience,
+  getAllUserExperiences: getSingleUserInfo,
+
 };

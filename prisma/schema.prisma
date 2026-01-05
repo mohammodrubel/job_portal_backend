@@ -181,7 +181,7 @@ model UserSkill {
 
 model UserExperience {
   id          String   @id @default(uuid())
-  userId      String
+  userId      String @unique
   company     String
   role        String
   startDate   DateTime
