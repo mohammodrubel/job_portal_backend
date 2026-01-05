@@ -19,5 +19,8 @@ router.get(
 
 router
   .route('/:id')
+  .get(auth(Role.RECRUITER), userExperienceController.getSingleUserExperience)
+  .patch(auth(Role.RECRUITER), userExperienceController.updateUserExperience)
+  .delete(auth(Role.RECRUITER), userExperienceController.deleteUserExperience);
 
 export const userExperienceRoutes = router;
