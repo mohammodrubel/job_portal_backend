@@ -163,20 +163,16 @@ model UserProfile {
 
 model UserSkill {
   id          String   @id @default(uuid())
-  userId      String
+  userId      String @unique
   name        String
   category    String?
   experience  Int?     @default(0)
   proficiency String?
-  
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  createdAt DateTime @default(now())
 
-  @@unique([userId, name])
-  @@index([userId])
-  @@index([name])
-  @@index([category])
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+
 }
 
 model UserExperience {
@@ -203,7 +199,7 @@ model UserExperience {
 
 model Education {
   id           String  @id @default(uuid())
-  userId       String
+  userId       String @unique
   institute    String
   degree       String
   fieldOfStudy String?

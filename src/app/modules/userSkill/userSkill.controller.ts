@@ -1,10 +1,11 @@
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
+import { skillService } from './userSkill.service';
 
 // Create Skill
 const createSkill = catchAsync(async (req, res) => {
-  const result = ''; // Your service logic here
+  const result = skillService.createSkill(req.body,req?.user?.id)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.CREATED,
@@ -13,21 +14,9 @@ const createSkill = catchAsync(async (req, res) => {
   });
 });
 
-// Get All Skills
-const getAllSkills = catchAsync(async (req, res) => {
-  const result = ''; // Your service logic here
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Skills retrieved successfully',
-    data: result,
-  });
-});
-
 // Get Single Skill by ID
 const getSingleSkill = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = ''; // Your service logic here
+  const result = skillService.getSingleSkill(req.user?.id)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -36,35 +25,9 @@ const getSingleSkill = catchAsync(async (req, res) => {
   });
 });
 
-// Update Skill
-const updateSkill = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = ''; // Your service logic here
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Skill updated successfully',
-    data: result,
-  });
-});
-
-// Delete Skill
-const deleteSkill = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = ''; // Your service logic here
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Skill deleted successfully',
-    data: result,
-  });
-});
 
 // Export all skill controllers
 export const skillController = {
   createSkill,
-  getAllSkills,
   getSingleSkill,
-  updateSkill,
-  deleteSkill,
 };

@@ -8,19 +8,16 @@ const router = Router();
 
 router.post(
   '/',
-  auth(Role.ADMIN),
+  auth(Role.RECRUITER),
   userExperienceController.createUserExperience,
 );
 router.get(
   '/',
-  auth(Role.ADMIN),
+  auth(Role.RECRUITER),
   userExperienceController.getAllUserExperiences,
 );
 
 router
   .route('/:id')
-  .get(auth(Role.ADMIN), userExperienceController.getSingleUserExperience)
-  .patch(auth(Role.ADMIN), userExperienceController.updateUserExperience)
-  .delete(auth(Role.ADMIN), userExperienceController.deleteUserExperience);
 
 export const userExperienceRoutes = router;

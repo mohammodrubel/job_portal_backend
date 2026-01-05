@@ -6,7 +6,7 @@ import config from '../config';
 import AppError from '../errors/AppError';
 import prisma from '../utils/prisma';
 
-type Role = 'ADMIN' | 'USER';
+type Role = 'ADMIN' | 'USER' | 'RECRUITER' | 'MODERATOR';
 
 const auth = (...roles: Role[]) => {
   return catchAsync(
