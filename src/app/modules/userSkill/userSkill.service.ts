@@ -1,7 +1,7 @@
 import { UserSkill } from '@prisma/client';
 import prisma from '../../utils/prisma';
 
-const createSkill = async (payload: Partial<UserSkill>, userId: string) => {
+const createSkill = async (payload: UserSkill, userId: string) => {
     const result = await prisma.userSkill.create(
       {
         data:{
@@ -16,9 +16,39 @@ const createSkill = async (payload: Partial<UserSkill>, userId: string) => {
     return result
 };
 const getSingleSkill = async (id: string) => {
-  
+  const result = await prisma.userSkill.findUnique(
+    {
+      where:{
+        userId:id 
+      }
+    }
+  )
+  return result 
 };
-export const skillService  = {
+
+const  updateSingleSkill = async(payload: Partial<UserSkill>,id:string)=>{
+  const reuslt = await prisma.userSkill.update(
+    {
+      where:{
+        userId:id 
+      },
+      data:payload
+    }
+  )
+}
+
+const deleteUserSkill = async (payload: Partial<UserSkill>, id: string) => {
+  const reuslt = await prisma.userSkill.delete({
+    where: {
+      userId: id,
+      id:payload.id
+    },
+  });
+  return reuslt
+};
+export const skillService = {
   createSkill,
   getSingleSkill,
+  updateSingleSkill,
+  deleteUserSkill,
 };
