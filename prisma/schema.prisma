@@ -108,7 +108,7 @@ model User {
   isBlocked     Boolean         @default(false)
   emailVerified Boolean         @default(false)
   isActive      Boolean         @default(true)
-  isDeleted     Boolean         @default(false)
+  // isDeleted     Boolean         @default(false)
   
   profile       UserProfile?
   skills        UserSkill[]
@@ -163,7 +163,7 @@ model UserProfile {
 
 model UserSkill {
   id          String   @id @default(uuid())
-  userId      String @unique
+  userId      String 
   name        String
   category    String?
   experience  Int?     @default(0)

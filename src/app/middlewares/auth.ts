@@ -37,7 +37,7 @@ const auth = (...roles: Role[]) => {
       const { email } = decoded;
 
       const user = await prisma.user.findUnique({
-        where: { email, is_deleted: false },
+        where: { email },
       });
 
       if (!user) {
