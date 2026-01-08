@@ -52,15 +52,27 @@ const  updateSingleSkill = async(payload: Partial<UserSkill>,id:string)=>{
   return result
 }
 
-const deleteUserSkill = async (skillId:string, userId:string) => {
-  // console.log({skillId,userId})
-  const reuslt = await prisma.userSkill.delete({
+const deleteUserSkill = async (skillId: string, userId: string) => {
+
+  const skill = await prisma.userSkill.findFirst({
     where: {
-     id:skillId,
-     userId:userId
+      id: skillId,
     },
   });
-  return reuslt;
+
+  if (!skill) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Skill not found or unauthorized');
+  }
+
+
+  const result = await prisma.userSkill.delete({
+    where: {
+      id: skillId,
+      userId:userId
+    },
+  });
+
+  return result;
 };
 export const skillService = {
   createSkill,

@@ -38,11 +38,11 @@ const updateSingleSkill = catchAsync(async(req,res)=>{
 const deleteUserSkill = catchAsync(async(req,res)=>{
   const skillId = req.params.id
   const userId = req.user.id 
-  const reuslt = skillService.deleteUserSkill(skillId,userId)
+  const reuslt =await skillService.deleteUserSkill(skillId,userId)
    sendResponse(res, {
      success: true,
      statusCode: httpStatus.OK,
-     message: 'Skill retrieved successfully',
+     message: 'Skill delete successfully',
      data: reuslt,
    });
 })
