@@ -7,12 +7,12 @@ import { skillController } from './userSkill.controller';
 
 const router = Router();
 
-router.post('/', auth(Role.ADMIN), skillController.createSkill);
+router.post('/', auth(Role.ADMIN,Role.MODERATOR,Role.RECRUITER,Role.USER), skillController.createSkill);
 
 
 router
-  .route('/:id')
-  .get(auth(Role.ADMIN), skillController.getSingleSkill)
+  .route('/')
+  .get(auth(Role.ADMIN,Role.MODERATOR,Role.RECRUITER,Role.USER), skillController.getSingleSkill)
 
 
 export const skillRoutes = router;

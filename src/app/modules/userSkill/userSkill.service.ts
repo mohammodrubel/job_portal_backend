@@ -16,7 +16,7 @@ const createSkill = async (payload: UserSkill, userId: string) => {
     return result
 };
 const getSingleSkill = async (id: string) => {
-  const result = await prisma.userSkill.findUnique(
+  const result = await prisma.userSkill.findMany(
     {
       where:{
         userId:id 
