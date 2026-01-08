@@ -16,9 +16,7 @@ const createSkill = catchAsync(async (req, res) => {
 
 // Get Single Skill by ID
 const getSingleSkill = catchAsync(async (req, res) => {
-
-  const result =await skillService.getSingleSkill(req.user?.id)
-  
+  const result =await skillService.getSingleSkill(req.params?.id)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -28,17 +26,19 @@ const getSingleSkill = catchAsync(async (req, res) => {
 });
 
 const updateSingleSkill = catchAsync(async(req,res)=>{
-  const result = skillService.updateSingleSkill(req.body, req.user?.id)
+  const result = skillService.updateSingleSkill(req.body, req.params?.id)
    sendResponse(res, {
      success: true,
      statusCode: httpStatus.OK,
-     message: 'Skill retrieved successfully',
+     message: 'Skill updated successfully',
      data: result,
    });
 })
 
 const deleteUserSkill = catchAsync(async(req,res)=>{
-  const reuslt = skillService.deleteUserSkill(req.body,req.user?.id)
+  const skillId = req.params.id
+  const userId = req.user.id 
+  const reuslt = skillService.deleteUserSkill(skillId,userId)
    sendResponse(res, {
      success: true,
      statusCode: httpStatus.OK,

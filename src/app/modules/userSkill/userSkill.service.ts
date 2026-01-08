@@ -1,5 +1,7 @@
 import { UserSkill } from '@prisma/client';
 import prisma from '../../utils/prisma';
+import AppError from '../../errors/AppError';
+import httpStatus from 'http-status';
 
 const createSkill = async (payload: UserSkill, userId: string) => {
     const result = await prisma.userSkill.create(
@@ -27,24 +29,38 @@ const getSingleSkill = async (id: string) => {
 };
 
 const  updateSingleSkill = async(payload: Partial<UserSkill>,id:string)=>{
-  const reuslt = await prisma.userSkill.update(
+  const isValidSkill = await prisma.userSkill.findUnique(
     {
       where:{
-        userId:id 
+        id:id 
+      }
+    }
+  )
+  if(!isValidSkill){
+    throw new AppError(httpStatus.NOT_FOUND,'Skill Not Found')
+  }
+
+  const result = await prisma.userSkill.update(
+    {
+      where:{
+        id:id, 
+        userId:isValidSkill.userId
       },
       data:payload
     }
   )
+  return result
 }
 
-const deleteUserSkill = async (payload: Partial<UserSkill>, id: string) => {
+const deleteUserSkill = async (skillId:string, userId:string) => {
+  // console.log({skillId,userId})
   const reuslt = await prisma.userSkill.delete({
     where: {
-      userId: id,
-      id:payload.id
+     id:skillId,
+     userId:userId
     },
   });
-  return reuslt
+  return reuslt;
 };
 export const skillService = {
   createSkill,
