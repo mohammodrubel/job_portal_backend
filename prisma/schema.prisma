@@ -3,10 +3,10 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
-
 ////////////////////
 /// ENUMS
 ////////////////////
@@ -150,6 +150,8 @@ model UserProfile {
   bio       String?
   photoUrl  String?
   portfolio String?
+  // Add this line ↓
+  resume    String?    // Add resume field here
   github    String?
   linkedin  String?
   twitter   String?

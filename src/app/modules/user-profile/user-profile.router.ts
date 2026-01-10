@@ -5,7 +5,11 @@ import { userProfileController } from './user-profile.controller';
 
 const router = Router();
 
-router.get('/', auth(Role.ADMIN), userProfileController.getSingleUsers);
+router.get(
+  '/',
+  auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
+  userProfileController.getSingleUsers,
+);
 router.patch(
   '/',
   auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
