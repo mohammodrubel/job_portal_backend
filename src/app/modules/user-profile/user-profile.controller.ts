@@ -2,9 +2,10 @@ import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import prisma from "../../utils/prisma";
 import sendResponse from "../../utils/sendResponse";
+import { UserProfileService } from "../user/user.service";
 
 const updateProfile = catchAsync(async(req,res)=>{
-    const result = ""
+    const result = await UserProfileService.updateSingleUser(req?.params?.id,req.body)
     sendResponse(res,{
         success:true,
         statusCode:httpStatus.OK,
@@ -12,8 +13,8 @@ const updateProfile = catchAsync(async(req,res)=>{
         data:result
     })
 })
-const getMyProfile = catchAsync(async (req, res) => {
-  const result = '';
+const getSingleUsers = catchAsync(async (req, res) => {
+  const result = await UserProfileService.getSingleUsers(req.params.id)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -24,6 +25,6 @@ const getMyProfile = catchAsync(async (req, res) => {
 
 
 export const userProfileController = {
-    updateProfile,
-    getMyProfile
-}
+  updateProfile,
+  getSingleUsers,
+};

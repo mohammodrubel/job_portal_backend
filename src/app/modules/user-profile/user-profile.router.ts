@@ -5,11 +5,11 @@ import { userProfileController } from './user-profile.controller';
 
 const router = Router();
 
-router.get('/', auth(Role.ADMIN), userProfileController.getMyProfile);
+router.get('/', auth(Role.ADMIN), userProfileController.getSingleUsers);
 router.patch(
   '/',
   auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
   userProfileController.updateProfile,
 );
 
-export const userRouter = router;
+export const userProfileRouter = router;

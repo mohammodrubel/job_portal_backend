@@ -1,29 +1,36 @@
+import httpStatus from 'http-status';
+import AppError from '../../errors/AppError';
 import prisma from '../../utils/prisma';
+import { UserProfile } from '@prisma/client';
 
-const GetAllUsers = async () => {
-  const result = await prisma.user.findMany({});
-  return result;
+
+const updateSingleUser = async (id: string, payload:Partial<UserProfile>) => {
+  const isValidUser = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+  });
+  if (!isValidUser) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Invalid users');
+  }
+  const reuslt = await prisma.userProfile.update({
+    where: {
+      id,
+    },
+    data: payload,
+  });
+  return reuslt
 };
 
-const GetSingleUser = async (id: string) => {
-  const result = await prisma.user.findUnique({
+const getSingleUsers = async (id: string) => {
+  await prisma.user.findUnique({
     where: {
       id: id,
     },
   });
-  return result;
 };
 
-const DeleteUser = async (id: string) => {
-  await prisma.user.delete({
-    where: {
-      id: id,
-    },
-  });
-};
-
-export const UserService = {
-  GetAllUsers,
-  GetSingleUser,
-  DeleteUser,
+export const UserProfileService = {
+  updateSingleUser,
+  getSingleUsers,
 };
