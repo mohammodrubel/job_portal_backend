@@ -8,19 +8,29 @@ const router = Router();
 
 router.post(
   '/',
-  auth(Role.RECRUITER),
+  auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
   userExperienceController.createUserExperience,
 );
 router.get(
   '/',
-  auth(Role.RECRUITER),
+  auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
   userExperienceController.getAllUserExperiences,
 );
 
-router
-  .route('/:id')
-  .get(auth(Role.RECRUITER), userExperienceController.getSingleUserExperience)
-  .patch(auth(Role.RECRUITER), userExperienceController.updateUserExperience)
-  .delete(auth(Role.RECRUITER), userExperienceController.deleteUserExperience);
+router.get(
+  '/',
+  auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
+  userExperienceController.getSingleUserExperience,
+);
 
+router.patch(
+  '/',
+  auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
+  userExperienceController.updateUserExperience,
+);
+router.delete(
+  '/',
+  auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
+  userExperienceController.deleteUserExperience,
+);
 export const userExperienceRoutes = router;

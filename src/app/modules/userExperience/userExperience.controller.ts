@@ -1,6 +1,7 @@
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
+import { userExperienceService } from './userExperience.service';
 
 // Create User Experience
 const createUserExperience = catchAsync(async (req, res) => {
@@ -15,7 +16,7 @@ const createUserExperience = catchAsync(async (req, res) => {
 
 // Get All User Experiences
 const getAllUserExperiences = catchAsync(async (req, res) => {
-  const result = ''; // Your service logic here
+  const result = await userExperienceService.createUserExperience(req.user?.id , req.body)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
