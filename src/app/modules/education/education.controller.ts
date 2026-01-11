@@ -1,10 +1,11 @@
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
+import { educationService } from './education.service';
 
 // Create Education
 const createEducation = catchAsync(async (req, res) => {
-  const result = ''; // Your service logic here
+  const result = await educationService.createEducation(req.body,req?.user?.id)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.CREATED,
@@ -13,21 +14,10 @@ const createEducation = catchAsync(async (req, res) => {
   });
 });
 
-// Get All Educations
-const getAllEducations = catchAsync(async (req, res) => {
-  const result = ''; // Your service logic here
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Educations retrieved successfully',
-    data: result,
-  });
-});
 
 // Get Single Education by ID
 const getSingleEducation = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = ''; // Your service logic here
+  const result = await educationService.getSingleEducation(req?.user?.id)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -38,8 +28,7 @@ const getSingleEducation = catchAsync(async (req, res) => {
 
 // Update Education
 const updateEducation = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = ''; // Your service logic here
+  const result = await educationService.updateEducation(req?.user?.id, req.body);
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -50,8 +39,9 @@ const updateEducation = catchAsync(async (req, res) => {
 
 // Delete Education
 const deleteEducation = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = ''; // Your service logic here
+  const educationId = req.params?.id;
+  const userId = req.user?.id 
+  const result = educationService.deleteEducation(educationId,userId)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -63,7 +53,6 @@ const deleteEducation = catchAsync(async (req, res) => {
 // Export all controllers
 export const educationController = {
   createEducation,
-  getAllEducations,
   getSingleEducation,
   updateEducation,
   deleteEducation,

@@ -3,6 +3,7 @@ import { AuthRoutes } from '../modules/auth/auth.routes';
 import { userRouter } from '../modules/user/user.router';
 import { skillRoutes } from '../modules/userSkill/userSkill.router';
 import { userProfileRouter } from '../modules/user-profile/user-profile.router';
+import { educationRoutes } from '../modules/education/education.router';
 
 const router = express.Router();
 
@@ -27,6 +28,10 @@ const routes: Route[] = [
   {
     path: '/user-profile',
     route: userProfileRouter,
+  },
+  {
+    path: '/education',
+    route: educationRoutes,
   },
 ];
 routes.forEach((route) => {

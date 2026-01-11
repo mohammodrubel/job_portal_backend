@@ -201,7 +201,7 @@ model UserExperience {
 
 model Education {
   id           String  @id @default(uuid())
-  userId       String @unique
+  userId       String 
   institute    String
   degree       String
   fieldOfStudy String?

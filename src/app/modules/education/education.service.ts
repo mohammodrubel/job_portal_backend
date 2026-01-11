@@ -8,7 +8,6 @@ const createEducation = async (
   payload: Education,
   userId: string,
 ) => {
-  // Validate user exists
   const user = await prisma.user.findUnique({
     where: { id: userId },
   });
@@ -27,18 +26,12 @@ const createEducation = async (
   });
 
   return result;
-};
-
-const getAllEducations = async (userId: string) => {
-  const result = await prisma.education.findMany({
-    where: { userId },
-  });
-  return result;
+ 
 };
 
 const getSingleEducation = async (id: string) => {
-  const result = await prisma.education.findUnique({
-    where: { id },
+  const result = await prisma.education.findMany({
+    where: { userId:id },
   });
 
   if (!result) {
@@ -50,54 +43,44 @@ const getSingleEducation = async (id: string) => {
 
 
 
-const updateEducation = async (
-  payload: Partial<Education>,
-  id: string,
-  userId: string,
-) => {
-  // First check if education exists and belongs to user
+const updateEducation = async (userId: string, payload: Partial<Education>) => {
+  console.log(payload)
   const existingEducation = await prisma.education.findFirst({
     where: {
-      id,
-      userId,
+      id: payload.id,
     },
   });
 
   if (!existingEducation) {
-    throw new AppError(
-      httpStatus.NOT_FOUND,
-      'Education not found or access denied',
-    );
+    throw new Error('Education record not found or does not belong to user');
   }
 
-  // Update education
   const result = await prisma.education.update({
-    where: { id },
-    data: payload,
+    where: {
+      id: payload.id,
+    },
+    data: {
+      degree: payload.degree,
+      description: payload.description,
+      fieldOfStudy: payload.fieldOfStudy,
+      endYear: payload.endYear,
+      grade: payload.grade,
+      institute: payload.institute,
+      isCurrent: payload.isCurrent,
+      startYear: payload.startYear,
+      updatedAt: new Date(),
+    },
   });
 
   return result;
 };
-
-const deleteEducation = async (id: string, userId: string) => {
+const deleteEducation = async (educationId:string, userId:string) => {
   // First check if education exists and belongs to user
-  const existingEducation = await prisma.education.findFirst({
-    where: {
-      id,
-      userId,
-    },
-  });
-
-  if (!existingEducation) {
-    throw new AppError(
-      httpStatus.NOT_FOUND,
-      'Education not found or access denied',
-    );
-  }
-
-  // Delete education
   const result = await prisma.education.delete({
-    where: { id },
+    where: {
+      userId,
+      id:educationId
+    },
   });
 
   return result;
@@ -105,7 +88,6 @@ const deleteEducation = async (id: string, userId: string) => {
 
 export const educationService = {
   createEducation,
-  getAllEducations,
   getSingleEducation,
   updateEducation,
   deleteEducation,
