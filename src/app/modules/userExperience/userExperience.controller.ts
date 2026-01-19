@@ -5,7 +5,10 @@ import { userExperienceService } from './userExperience.service';
 
 // Create User Experience
 const createUserExperience = catchAsync(async (req, res) => {
-  const result = ''; // Your service logic here
+  const result = await userExperienceService.createUserExperience(
+    req.user?.id,
+    req.body,
+  );
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.CREATED,
@@ -16,12 +19,12 @@ const createUserExperience = catchAsync(async (req, res) => {
 
 // Get All User Experiences
 const getAllUserExperiences = catchAsync(async (req, res) => {
-  const result = await userExperienceService.createUserExperience(req.user?.id , req.body)
+    const reuslt = await userExperienceService.getAllUserExperiences(req?.user?.id)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
     message: 'User experiences retrieved successfully',
-    data: result,
+    data: reuslt,
   });
 });
 
@@ -51,8 +54,8 @@ const updateUserExperience = catchAsync(async (req, res) => {
 
 // Delete User Experience
 const deleteUserExperience = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = ''; // Your service logic here
+  const experienceId = req.params.id;
+  const result = await userExperienceService.deleteUserExperience(experienceId,req?.user?.id)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,

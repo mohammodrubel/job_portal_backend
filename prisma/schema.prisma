@@ -179,7 +179,7 @@ model UserSkill {
 
 model UserExperience {
   id          String   @id @default(uuid())
-  userId      String 
+  userId      String
   company     String
   role        String
   startDate   DateTime
@@ -188,17 +188,14 @@ model UserExperience {
   location    String?
   description String?
   industry    String?
-  
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([userId])
-  @@index([company])
-  @@index([startDate])
 }
-
 model Education {
   id           String  @id @default(uuid())
   userId       String 
