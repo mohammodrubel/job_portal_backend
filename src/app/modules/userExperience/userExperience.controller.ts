@@ -42,8 +42,9 @@ const getSingleUserExperience = catchAsync(async (req, res) => {
 
 // Update User Experience
 const updateUserExperience = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = ''; // Your service logic here
+  const userId = req?.user?.id 
+  const params =  req?.params?.id 
+  const result = userExperienceService.updateUserExperience(userId,params,req.body)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,

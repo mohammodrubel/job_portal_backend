@@ -24,7 +24,7 @@ router.get(
 );
 
 router.patch(
-  '/',
+  '/:id',
   auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
   userExperienceController.updateUserExperience,
 );

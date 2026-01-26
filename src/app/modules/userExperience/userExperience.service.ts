@@ -48,14 +48,28 @@ const getAllUserExperiences = async (id: string) => {
   });
   return reuslt;
 };
-const updateUserExperience = async (payload: Partial<UserExperience>, experienceId: string) => {
-  const result = await prisma.userExperience.update({
-    where: {
-      id: experienceId,
-    },
-    data: payload,
-  });
-  return result
+const updateUserExperience = async (userId:string,params:string,payload:Partial<UserExperience>) => {
+  const isExistExperience = await await prisma.userExperience.findFirst(
+    {
+        where:{
+          id:params,
+        }
+    }
+  )
+  if(!isExistExperience){
+    throw new AppError(httpStatus.NOT_FOUND,"experience not found")
+  }
+
+  const reuslt = await prisma.userExperience.update(
+    {
+      where:{
+        id:params,
+        userId:userId 
+      },
+      data:payload
+    }
+  )
+  return reuslt
 };
 const deleteUserExperience = async (experienceId: string, userId: string) => {
   const reuslt = await prisma.userExperience.delete({
