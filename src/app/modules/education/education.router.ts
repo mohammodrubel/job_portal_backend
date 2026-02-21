@@ -3,7 +3,6 @@ import { Router } from 'express';
 import { educationController } from './education.controller';
 import auth from '../../middlewares/auth';
 import { Role } from '@prisma/client';
-import validateRequest from '../../middlewares/validateRequest';
 
 const router = Router();
 
@@ -11,7 +10,7 @@ const router = Router();
 router.post(
   '/',
   auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
-  // validateRequest(educationValidation.createEducation), // Optional validation
+  validateRequest(educationValidation.createEducation), 
   educationController.createEducation,
 );
 

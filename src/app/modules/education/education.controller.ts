@@ -5,6 +5,7 @@ import { educationService } from './education.service';
 
 // Create Education
 const createEducation = catchAsync(async (req, res) => {
+  console.log(req.body,'controller')
   const result = await educationService.createEducation(req.body,req?.user?.id)
   sendResponse(res, {
     success: true,

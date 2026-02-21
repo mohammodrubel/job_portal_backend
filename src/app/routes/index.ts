@@ -30,14 +30,14 @@ const routes: Route[] = [
     path: '/user-profile',
     route: userProfileRouter,
   },
-  {
-    path: '/education',
-    route: educationRoutes,
-  },
-  {
-    path: '/experience',
-    route: userExperienceRoutes,
-  },
+  // {
+  //   path: '/education',
+  //   route: educationRoutes,
+  // },
+  // {
+  //   path: '/experience',
+  //   route: userExperienceRoutes,
+  // },
 ];
 routes.forEach((route) => {
   router.use(route.path, route.route);
