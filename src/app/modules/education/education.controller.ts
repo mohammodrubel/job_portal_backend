@@ -1,12 +1,12 @@
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
-import { educationService } from './education.service';
+import { educationService } from './education.service'; // corrected import path
 
 // Create Education
 const createEducation = catchAsync(async (req, res) => {
-  console.log(req.body,'controller')
-  const result = await educationService.createEducation(req.body,req?.user?.id)
+  const userId = req.user?.id;
+  const result = await educationService.createEducation(userId, req.body);
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.CREATED,
@@ -15,21 +15,22 @@ const createEducation = catchAsync(async (req, res) => {
   });
 });
 
-
-// Get Single Education by ID
-const getSingleEducation = catchAsync(async (req, res) => {
-  const result = await educationService.getSingleEducation(req?.user?.id)
+// Get all Education records for the logged-in user
+const getEducation = catchAsync(async (req, res) => {
+  const userId = req.user?.id;
+  const result = await educationService.getEducation(userId);
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: 'Education retrieved successfully',
+    message: 'Education records retrieved successfully',
     data: result,
   });
 });
 
-// Update Education
+// Update Education by ID
 const updateEducation = catchAsync(async (req, res) => {
-  const result = await educationService.updateEducation(req?.user?.id, req.body);
+  const educationId = req.params.id;
+  const result = await educationService.updateEducation(educationId, req.body);
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -38,11 +39,10 @@ const updateEducation = catchAsync(async (req, res) => {
   });
 });
 
-// Delete Education
+// Delete Education by ID
 const deleteEducation = catchAsync(async (req, res) => {
-  const educationId = req.params?.id;
-  const userId = req.user?.id 
-  const result = educationService.deleteEducation(educationId,userId)
+  const educationId = req.params.id;
+  const result = await educationService.deleteEducation(educationId);
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -51,10 +51,9 @@ const deleteEducation = catchAsync(async (req, res) => {
   });
 });
 
-// Export all controllers
 export const educationController = {
   createEducation,
-  getSingleEducation,
+  getEducation,
   updateEducation,
   deleteEducation,
 };

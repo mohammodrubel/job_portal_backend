@@ -202,8 +202,8 @@ model Education {
   institute    String
   degree       String
   fieldOfStudy String?
-  startYear    Int
-  endYear      Int?
+  startYear    String?
+  endYear      String?
   isCurrent    Boolean @default(false)
   grade        String?
   description  String?

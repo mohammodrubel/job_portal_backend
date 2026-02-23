@@ -3,34 +3,36 @@ import { Router } from 'express';
 import { educationController } from './education.controller';
 import auth from '../../middlewares/auth';
 import { Role } from '@prisma/client';
+import validateRequest from '../../middlewares/validateRequest';
+import { educationValidation } from './education.validation';
 
 const router = Router();
 
-// POST: Create education for the authenticated user
+
 router.post(
   '/',
   auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
-  validateRequest(educationValidation.createEducation), 
+  validateRequest(educationValidation.educationValidationSchema), 
   educationController.createEducation,
 );
 
-// GET: Get education for the authenticated user
-// This returns education data for the logged-in user
+
 router.get(
   '/',
   auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
-  educationController.getSingleEducation, // Consider renaming from getSingleEducation
+  educationController.getEducation, 
 );
 
-// PATCH: Update education for the authenticated user
-// Updates the logged-in user's education
 router.patch(
-  '/',
+  '/:id',
   auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
-  // validateRequest(educationValidation.updateEducation), // Optional validation
+  validateRequest(educationValidation.educationValidationSchema), 
   educationController.updateEducation,
 );
 
-router.delete('/:id',auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),educationController.deleteEducation);
+router.delete(
+  '/:id',
+  auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
+  educationController.deleteEducation);
 
 export const educationRoutes = router;

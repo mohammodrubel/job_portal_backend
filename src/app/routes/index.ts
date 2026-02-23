@@ -30,10 +30,10 @@ const routes: Route[] = [
     path: '/user-profile',
     route: userProfileRouter,
   },
-  // {
-  //   path: '/education',
-  //   route: educationRoutes,
-  // },
+  {
+    path: '/education',
+    route: educationRoutes,
+  },
   // {
   //   path: '/experience',
   //   route: userExperienceRoutes,
