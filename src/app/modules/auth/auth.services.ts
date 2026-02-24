@@ -27,8 +27,10 @@ const Login = async (payload: ILogin) => {
 
   const jwtPayload = {
     id: user.id,
+    name:user?.fullName,
     email: user.email,
     role: user.role ,
+    ispublish:user.isPublish
   };
 
   const access_token = AuthUtils.CreateToken(
@@ -71,8 +73,10 @@ const Register = async (payload: IRegister) => {
 
   const jwtPayload = {
     id: user.id,
+    name:user?.fullName,
     email: user.email,
     role: user.role,
+    isPublish:user.isPublish
   };
 
   const access_token = AuthUtils.CreateToken(
