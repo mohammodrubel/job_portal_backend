@@ -183,7 +183,7 @@ model UserExperience {
   company     String
   role        String
   startDate   DateTime
-  endDate     DateTime?
+  endDate     DateTime
   isCurrent   Boolean  @default(false)
   location    String?
   description String?

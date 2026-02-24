@@ -1,11 +1,11 @@
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
-import { userExperienceService } from './userExperience.service';
+import { UserExperienceService } from './userExperience.service';
 
 // Create User Experience
-const createUserExperience = catchAsync(async (req, res) => {
-  const result = await userExperienceService.createUserExperience(
+const createExperience = catchAsync(async (req, res) => {
+  const result = await UserExperienceService.createExperience(
     req.user?.id,
     req.body,
   );
@@ -18,8 +18,8 @@ const createUserExperience = catchAsync(async (req, res) => {
 });
 
 // Get All User Experiences
-const getAllUserExperiences = catchAsync(async (req, res) => {
-    const reuslt = await userExperienceService.getAllUserExperiences(req?.user?.id)
+const getAllExperience = catchAsync(async (req, res) => {
+  const reuslt = await UserExperienceService.getAllExperience(req?.user?.id)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -28,23 +28,11 @@ const getAllUserExperiences = catchAsync(async (req, res) => {
   });
 });
 
-// Get Single User Experience by ID
-const getSingleUserExperience = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = ''; // Your service logic here
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'User experience retrieved successfully',
-    data: result,
-  });
-});
 
 // Update User Experience
-const updateUserExperience = catchAsync(async (req, res) => {
-  const userId = req?.user?.id 
-  const params =  req?.params?.id 
-  const result = userExperienceService.updateUserExperience(userId,params,req.body)
+const updateExperience = catchAsync(async (req, res) => {
+  const params = req?.params?.id
+  const result = UserExperienceService.updateExperience(params, req.body)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -54,9 +42,9 @@ const updateUserExperience = catchAsync(async (req, res) => {
 });
 
 // Delete User Experience
-const deleteUserExperience = catchAsync(async (req, res) => {
+const deleteExperience = catchAsync(async (req, res) => {
   const experienceId = req.params.id;
-  const result = await userExperienceService.deleteUserExperience(experienceId,req?.user?.id)
+  const result = await UserExperienceService.deleteExperience(experienceId)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -67,9 +55,8 @@ const deleteUserExperience = catchAsync(async (req, res) => {
 
 // Export all user experience controllers
 export const userExperienceController = {
-  createUserExperience,
-  getAllUserExperiences,
-  getSingleUserExperience,
-  updateUserExperience,
-  deleteUserExperience,
+  createExperience,
+  getAllExperience,
+  updateExperience,
+  deleteExperience
 };

@@ -34,10 +34,10 @@ const routes: Route[] = [
     path: '/education',
     route: educationRoutes,
   },
-  // {
-  //   path: '/experience',
-  //   route: userExperienceRoutes,
-  // },
+  {
+    path: '/experience',
+    route: userExperienceRoutes,
+  },
 ];
 routes.forEach((route) => {
   router.use(route.path, route.route);
