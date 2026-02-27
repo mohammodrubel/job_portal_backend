@@ -22,6 +22,7 @@ const DeleteUser = async (id: string) => {
   });
 };
 
+
 export const UserService = {
   GetAllUsers,
   GetSingleUser,

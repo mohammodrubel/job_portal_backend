@@ -13,23 +13,7 @@ const createCompany = async (
   if (!file) {
     throw new AppError(httpStatus.BAD_REQUEST, "Company logo is required");
   }
-
-  // 🔎 Check if user already primary recruiter somewhere
-  const existingRecruiter = await prisma.recruiter.findFirst({
-    where: {
-      userId,
-      isPrimary: true,
-    },
-  });
-
-//   if (existingRecruiter) {
-//     throw new AppError(
-//       httpStatus.CONFLICT,
-//       "User already owns a company"
-//     );
-//   }
-
-  // 1️⃣ Upload image
+  
   const uniqueImageName = `company-${Date.now()}`;
 
   const uploadedImage = await sendImageToCloudinary(
@@ -37,7 +21,7 @@ const createCompany = async (
     uniqueImageName
   ) as { secure_url: string };
 
-  // 2️⃣ Transaction
+ 
   const result = await prisma.$transaction(async (tx) => {
     const company = await tx.company.create({
       data: {
@@ -58,7 +42,7 @@ const createCompany = async (
       data: {
         companyId: company.id,
         userId,
-        position: data.position ?? "Owner",
+        position: data.position ?? "HR",
         isPrimary: true,
       },
     });
@@ -68,10 +52,45 @@ const createCompany = async (
 
   return result;
 };
-  const getAllCompanies= async ()=>{}
-  const getSingleCompany= async ()=>{}
-  const updateCompany= async ()=>{}
-  const deleteCompany= async ()=>{}
+  const getAllCompanies= async ()=>{
+    const result = await prisma.company.findMany(
+      {
+        where:{}
+      }
+    )
+    return result
+  }
+  const getSingleCompany= async (id:string)=>{
+    const result = await prisma.company.findUnique(
+      {
+        where:{
+          id:id
+        }
+      }
+    )
+    return result
+  }
+  const updateCompany= async (id:string,data:Partial<Company>)=>{
+    const reuslt = await prisma.company.update(
+      {
+        where:{
+          id:id 
+        },
+        data:data
+      }
+    )
+    return reuslt
+  }
+  const deleteCompany= async (id:string)=>{
+    const result = await prisma.company.delete(
+      {
+        where:{
+          id:id 
+        }
+      }
+    )
+    return result
+  }
 
 export const companyService = {
   createCompany,

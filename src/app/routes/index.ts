@@ -6,6 +6,8 @@ import { userProfileRouter } from '../modules/user-profile/user-profile.router';
 import { educationRoutes } from '../modules/education/education.router';
 import { userExperienceRoutes } from '../modules/userExperience/userExperience.router';
 import { companyRoutes } from '../modules/company/compnay.router';
+import { jobPostingRoutes } from '../modules/jobPosting/jobPosting.router';
+import { RecruiterRouter } from '../modules/recruiter/Recruiter.router';
 
 const router = express.Router();
 
@@ -42,6 +44,14 @@ const routes: Route[] = [
   {
     path: '/company',
     route: companyRoutes,
+  },
+  {
+    path: '/job-posting',
+    route: jobPostingRoutes,
+  },
+  {
+    path: '/recruiter',
+    route: RecruiterRouter,
   },
 ];
 routes.forEach((route) => {

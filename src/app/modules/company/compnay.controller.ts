@@ -23,7 +23,7 @@ const createCompany = catchAsync(async (req, res) => {
 });
 // Get All Companies
 const getAllCompanies = catchAsync(async (req, res) => {
-  const result = ''; // Your service logic here
+  const result = await companyService.getAllCompanies()
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -35,7 +35,7 @@ const getAllCompanies = catchAsync(async (req, res) => {
 // Get Single Company by ID
 const getSingleCompany = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = ''; // Your service logic here
+  const result = await companyService.getSingleCompany(id)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -47,7 +47,7 @@ const getSingleCompany = catchAsync(async (req, res) => {
 // Update Company
 const updateCompany = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = ''; // Your service logic here
+  const result = await companyService.updateCompany(id,req.body)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -59,7 +59,7 @@ const updateCompany = catchAsync(async (req, res) => {
 // Delete Company
 const deleteCompany = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = ''; // Your service logic here
+  const result = await companyService.deleteCompany(id)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
