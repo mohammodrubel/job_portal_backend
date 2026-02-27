@@ -3,10 +3,13 @@ import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { Request, Response } from "express";
 import { JobPostService } from "./jobPosting.service";
+import pick from "../../utils/PickFunction";
+import { jobSearchFields, paginationFields } from "./jobPostingConstant";
 
 // Create Job Post
 export const createJobPost = catchAsync(async (req: Request, res: Response) => {
-    const result = await JobPostService.createJobPost(req.body);
+    const file = req.file 
+    const result = await JobPostService.createJobPost(file,req.body);
     sendResponse(res, {
         success: true,
         statusCode: httpStatus.CREATED,
@@ -28,8 +31,10 @@ export const getSingleJobPost = catchAsync(async (req: Request, res: Response) =
 });
 
 // Get All Job Posts
-export const getAllJobPosts = catchAsync(async (_req: Request, res: Response) => {
-    const result = await JobPostService.getAllJobPosts();
+export const getAllJobPosts = catchAsync(async (req: Request, res: Response) => {
+    const filter = pick(req.query, jobSearchFields);
+    const options = pick(req.query, paginationFields);
+    const result = await JobPostService.getAllJobPosts(filter,options);
     sendResponse(res, {
         success: true,
         statusCode: httpStatus.OK,

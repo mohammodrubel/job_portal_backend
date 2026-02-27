@@ -223,28 +223,6 @@ model Education {
 /// COMPANY & RECRUITER
 ////////////////////
 
-model Company {
-  id           String   @id @default(uuid())
-  name         String
-  logoUrl      String?
-  website      String?
-  size         String?
-  industry     Industry?
-  description  String?
-  foundedYear  Int?
-  headquarters String?
-  isVerified   Boolean  @default(false)
-
-  recruiters Recruiter[]
-  jobs       Job[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([name])
-  @@index([industry])
-  @@index([isVerified])
-}
 
 model Recruiter {
   id        String   @id @default(uuid())
@@ -254,8 +232,6 @@ model Recruiter {
   isPrimary Boolean @default(false)
 
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -271,52 +247,27 @@ model Recruiter {
 
 model Job {
   id           String   @id @default(uuid())
-  companyId    String
   title        String
   description  String
-  requirements String?
-  benefits     String?
-  
-  location String?
-  country  String?
-  city     String?
-  
   jobType         JobType
   workMode        WorkMode
-  experienceLevel ExperienceLevel
-  urgency         JobUrgency @default(NORMAL)
-  
   salaryMin      Int?
   salaryMax      Int?
-  salaryCurrency String @default("USD")
-  salaryPeriod   String @default("YEAR")
-  
-  vacancies Int      @default(1)
-  education String?
-  industry  Industry?
-  category  String?
-  
-  isVisaSponsored Boolean @default(false)
-  isRelocation    Boolean @default(false)
-  remoteAllowed   Boolean @default(false)
-  remoteCountries String[]
-  
   status       JobStatus @default(PENDING)
   postedById   String?
   approvedById String?
   approvedAt   DateTime?
   closedAt     DateTime?
+  tags String[]
+  companyLogo String 
+  companyName String 
+  location String 
   deadline     DateTime
-  
-  views             Int @default(0)
   applicationsCount Int @default(0)
-  savedCount        Int @default(0)
-  
-  company      Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
   skills       JobSkill[]
   applications JobApplication[]
   payments Payment[]
-  
+
   postedBy   User? @relation("PostedBy", fields: [postedById], references: [id], onDelete: SetNull)
   approvedBy User? @relation("ApprovedBy", fields: [approvedById], references: [id], onDelete: SetNull)
   
@@ -324,16 +275,9 @@ model Job {
   updatedAt   DateTime @updatedAt
   publishedAt DateTime?
 
-  @@index([companyId])
   @@index([status])
   @@index([jobType])
   @@index([workMode])
-  @@index([experienceLevel])
-  @@index([industry])
-  @@index([category])
-  @@index([location])
-  @@index([country])
-  @@index([city])
   @@index([postedById])
   @@index([approvedById])
   @@index([deadline])
