@@ -32,6 +32,10 @@ router.get(
   // auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
   JobPostController.getAllJobPosts, 
 );
+router.get(
+  '/:id',
+  JobPostController.getSingleJobPost, 
+);
 
 router.patch(
   '/:id',

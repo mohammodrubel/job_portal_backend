@@ -88,7 +88,16 @@ const getAllJobPosts = async (query: any, options: any) => {
 
 
 }
-const getSingleJobPost = async () => { }
+const getSingleJobPost = async (id:string) => {
+    const reuslt = await prisma.job.findUnique(
+        {
+            where:{
+                id:id
+            }
+        }
+    )
+    return reuslt
+}
 const updateJobPost = async () => { }
 const deleteJobPost = async () => { }
 
