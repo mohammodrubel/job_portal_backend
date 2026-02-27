@@ -1,18 +1,26 @@
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
+import { companyService } from './company.service';
 
 // Create Company (Fixed spelling from "createCompnay" to "createCompany")
 const createCompany = catchAsync(async (req, res) => {
-  const result = ''; // Your service logic here
+  const userId = req.user.id;
+  const file = req.file as Express.Multer.File | undefined;
+
+  const result = await companyService.createCompany(
+    file,
+    req.body,
+    userId
+  );
+
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.CREATED,
-    message: 'Company created successfully',
+    message: "Company created successfully",
     data: result,
   });
 });
-
 // Get All Companies
 const getAllCompanies = catchAsync(async (req, res) => {
   const result = ''; // Your service logic here

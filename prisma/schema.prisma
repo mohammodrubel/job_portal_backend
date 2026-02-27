@@ -100,17 +100,18 @@ enum Industry {
 ////////////////////
 
 model User {
-  id            String          @id @default(uuid())
-  email         String          @unique
+  id            String   @id @default(uuid())
+  email         String   @unique
   fullName      String
   password      String
-  role          Role            @default(USER)
-  isBlocked     Boolean         @default(false)
-  emailVerified Boolean         @default(false)
-  isPublish     Boolean         @default(false)
-  isActive      Boolean         @default(true)
-  // isDeleted     Boolean         @default(false)
-  
+  role          Role     @default(USER)
+  isBlocked     Boolean  @default(false)
+  emailVerified Boolean  @default(false)
+  isPublish     Boolean  @default(false)
+  isActive      Boolean  @default(true)
+
+  recruiters    Recruiter[]   // ✅ important fix
+
   profile       UserProfile?
   skills        UserSkill[]
   experiences   UserExperience[]
@@ -120,17 +121,16 @@ model User {
   subscription  Subscription?
   aiUsageLogs   AiUsageLog[]
   payments      Payment[]
-  recruiter     Recruiter?
-  
+
   messagesSent   Message[]      @relation("SentMessages")
   messagesRecv   Message[]      @relation("ReceivedMessages")
   conversations1 Conversation[] @relation("Participant1")
   conversations2 Conversation[] @relation("Participant2")
-  
+
   postedJobs   Job[]            @relation("PostedBy")
   approvedJobs Job[]            @relation("ApprovedBy")
   reviewedApps JobApplication[] @relation("ReviewedBy")
-  
+
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   lastLoginAt DateTime?
@@ -225,7 +225,7 @@ model Education {
 
 model Company {
   id           String   @id @default(uuid())
-  name         String   @unique
+  name         String
   logoUrl      String?
   website      String?
   size         String?
@@ -234,10 +234,10 @@ model Company {
   foundedYear  Int?
   headquarters String?
   isVerified   Boolean  @default(false)
-  
+
   recruiters Recruiter[]
   jobs       Job[]
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -248,14 +248,14 @@ model Company {
 
 model Recruiter {
   id        String   @id @default(uuid())
-  userId    String   @unique
+  userId    String
   companyId String
   position  String?
   isPrimary Boolean @default(false)
-  
+
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

@@ -39,13 +39,13 @@ const RegisterSchema = z.object({
       })
       .min(6, 'Password must be at least 6 characters'),
     role: z
-      .enum(['JOB_SEEKER', 'RECRUITER', 'ADMIN'], {
+      .enum(['USER', 'RECRUITER', 'ADMIN'], {
         invalid_type_error:
           'Role must be either JOB_SEEKER, RECRUITER, or ADMIN',
         message:
-          'Role is required and must be either JOB_SEEKER, RECRUITER, or ADMIN',
+          'Role is required and must be either USER, RECRUITER, or ADMIN',
       })
-      .default('JOB_SEEKER'),
+      .default('USER'),
   }),
 });
 

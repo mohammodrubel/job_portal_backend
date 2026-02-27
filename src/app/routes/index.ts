@@ -5,6 +5,7 @@ import { skillRoutes } from '../modules/userSkill/userSkill.router';
 import { userProfileRouter } from '../modules/user-profile/user-profile.router';
 import { educationRoutes } from '../modules/education/education.router';
 import { userExperienceRoutes } from '../modules/userExperience/userExperience.router';
+import { companyRoutes } from '../modules/company/compnay.router';
 
 const router = express.Router();
 
@@ -37,6 +38,10 @@ const routes: Route[] = [
   {
     path: '/experience',
     route: userExperienceRoutes,
+  },
+  {
+    path: '/company',
+    route: companyRoutes,
   },
 ];
 routes.forEach((route) => {

@@ -1,48 +1,54 @@
-import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
-import multer from "multer";
-import path from "path";
+import { v2 as cloudinary } from 'cloudinary';
+import multer from 'multer';
+import fs from 'fs'
+import config from '../config';
 
-// Cloudinary config
+
 cloudinary.config({
-  cloud_name: "de2ysphks",
-  api_key: "426748166613985",
-  api_secret: "7gqc9Xwit13V0MP58NqqOqRLKNs",
+    cloud_name: config.cloudinary.cloud_name,
+    api_key: config.cloudinary.api_key,
+    api_secret: config.cloudinary.api_secret
 });
 
-// 🔹 Helper to sanitize filenames for Cloudinary
-const sanitizeFileName = (filename: string) => {
-  const name = path.parse(filename).name; // without extension
-  return name
-    .replace(/[^a-zA-Z0-9-_]/g, "_") // replace spaces & symbols with "_"
-    .toLowerCase();
-};
 
-// 🔹 Upload buffer directly to Cloudinary
-export const sendImageCloudinary = async (
-  buffer: Buffer,
-  originalName?: string,
-  folder: string = "specialOffers" // default folder
-): Promise<UploadApiResponse> => {
-  return new Promise((resolve, reject) => {
-    let options: any = { folder };
 
-    // If originalName provided → sanitize & set as public_id
-    if (originalName) {
-      options.public_id = sanitizeFileName(originalName);
+export const sendImageToCloudinary = (path: string, imageName: string) => {
+
+    return new Promise((resolve, reject) => {
+        cloudinary.uploader.upload(
+            path,
+            {
+                public_id: imageName
+            },
+            function (error, result) {
+                if (error) {
+                    reject(error)
+                }
+                resolve(result)
+                fs.unlink(path, (error) => {
+                    if (error) {
+                        reject(error)
+                    } else {
+                        console.log('file is deleted')
+                    }
+                })
+            }
+        )
+
+    })
+
+}
+
+
+// multer 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, process.cwd() + '/uploads')
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        cb(null, file.fieldname + '-' + uniqueSuffix)
     }
+})
 
-    const stream = cloudinary.uploader.upload_stream(
-      options,
-      (error, result) => {
-        if (error) return reject(error);
-        if (result) return resolve(result);
-      }
-    );
-
-    stream.end(buffer);
-  });
-};
-
-// 🔹 Multer config (memory storage → keeps files in RAM, no disk writes)
-const storage = multer.memoryStorage();
-export const upload = multer({ storage });
+export const upload = multer({ storage: storage })

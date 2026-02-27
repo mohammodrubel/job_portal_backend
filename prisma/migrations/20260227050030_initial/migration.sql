@@ -40,8 +40,8 @@ CREATE TABLE "User" (
     "role" "Role" NOT NULL DEFAULT 'USER',
     "isBlocked" BOOLEAN NOT NULL DEFAULT false,
     "emailVerified" BOOLEAN NOT NULL DEFAULT false,
+    "isPublish" BOOLEAN NOT NULL DEFAULT false,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
-    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "lastLoginAt" TIMESTAMP(3),
@@ -58,6 +58,7 @@ CREATE TABLE "UserProfile" (
     "bio" TEXT,
     "photoUrl" TEXT,
     "portfolio" TEXT,
+    "resume" TEXT,
     "github" TEXT,
     "linkedin" TEXT,
     "twitter" TEXT,
@@ -88,7 +89,7 @@ CREATE TABLE "UserExperience" (
     "company" TEXT NOT NULL,
     "role" TEXT NOT NULL,
     "startDate" TIMESTAMP(3) NOT NULL,
-    "endDate" TIMESTAMP(3),
+    "endDate" TIMESTAMP(3) NOT NULL,
     "isCurrent" BOOLEAN NOT NULL DEFAULT false,
     "location" TEXT,
     "description" TEXT,
@@ -106,8 +107,8 @@ CREATE TABLE "Education" (
     "institute" TEXT NOT NULL,
     "degree" TEXT NOT NULL,
     "fieldOfStudy" TEXT,
-    "startYear" INTEGER NOT NULL,
-    "endYear" INTEGER,
+    "startYear" TEXT,
+    "endYear" TEXT,
     "isCurrent" BOOLEAN NOT NULL DEFAULT false,
     "grade" TEXT,
     "description" TEXT,
@@ -356,25 +357,7 @@ CREATE UNIQUE INDEX "UserProfile_userId_key" ON "UserProfile"("userId");
 CREATE INDEX "UserProfile_userId_idx" ON "UserProfile"("userId");
 
 -- CreateIndex
-CREATE INDEX "UserSkill_userId_idx" ON "UserSkill"("userId");
-
--- CreateIndex
-CREATE INDEX "UserSkill_name_idx" ON "UserSkill"("name");
-
--- CreateIndex
-CREATE INDEX "UserSkill_category_idx" ON "UserSkill"("category");
-
--- CreateIndex
-CREATE UNIQUE INDEX "UserSkill_userId_name_key" ON "UserSkill"("userId", "name");
-
--- CreateIndex
 CREATE INDEX "UserExperience_userId_idx" ON "UserExperience"("userId");
-
--- CreateIndex
-CREATE INDEX "UserExperience_company_idx" ON "UserExperience"("company");
-
--- CreateIndex
-CREATE INDEX "UserExperience_startDate_idx" ON "UserExperience"("startDate");
 
 -- CreateIndex
 CREATE INDEX "Education_userId_idx" ON "Education"("userId");
@@ -386,9 +369,6 @@ CREATE INDEX "Education_institute_idx" ON "Education"("institute");
 CREATE INDEX "Education_startYear_idx" ON "Education"("startYear");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Company_name_key" ON "Company"("name");
-
--- CreateIndex
 CREATE INDEX "Company_name_idx" ON "Company"("name");
 
 -- CreateIndex
@@ -396,9 +376,6 @@ CREATE INDEX "Company_industry_idx" ON "Company"("industry");
 
 -- CreateIndex
 CREATE INDEX "Company_isVerified_idx" ON "Company"("isVerified");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Recruiter_userId_key" ON "Recruiter"("userId");
 
 -- CreateIndex
 CREATE INDEX "Recruiter_companyId_idx" ON "Recruiter"("companyId");
