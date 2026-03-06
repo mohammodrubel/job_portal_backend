@@ -26,6 +26,8 @@ async function startServer() {
   });
 }
 
+
+
 startServer();
 
 process.on('SIGTERM', () => {
@@ -33,3 +35,6 @@ process.on('SIGTERM', () => {
     server.close();
   }
 });
+
+
+

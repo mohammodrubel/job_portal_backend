@@ -11,7 +11,7 @@ const router = Router();
 
 
 router.post(
-  '/',
+  '/job-posting',
   auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
   upload.single("file"),
   (req, res, next) => {
@@ -28,23 +28,23 @@ router.post(
 );
 
 router.get(
-  '/',
+  '/get-all-job',
   // auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
   JobPostController.getAllJobPosts, 
 );
 router.get(
-  '/:id',
+  '/get-single-job/:id',
   JobPostController.getSingleJobPost, 
 );
 
 router.patch(
-  '/:id',
+  '/update-job/:id',
   auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
   JobPostController.updateJobPost,
 );
 
 router.delete(
-  '/:id',
+  '/job-remove/:id',
   auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
   JobPostController.deleteJobPost);
 

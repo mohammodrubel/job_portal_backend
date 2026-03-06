@@ -1,11 +1,13 @@
 export const jobSearchFields = [  
-    "title",        
-    "description",  
-    "location",
-    "country",
-    "city",
+    "workMode",
+    "searchTerm",
+    "salaryMin",
+    "salaryMax",
     "jobType",
-    "category",
+    "datePosted",   // preset filter: today/week/month
+    "dateStart",    // custom range start
+    "dateEnd"       // custom range end
 ]
-
 export const paginationFields = ['limit', 'page', 'sort', 'order'];
+
+

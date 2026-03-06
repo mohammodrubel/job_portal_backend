@@ -1,0 +1,30 @@
+<div style="font-family: 'Segoe UI', sans-serif; padding: 20px;">
+  <h1 style="text-align:center; color:#2E86AB;">{{fullName}}</h1>
+  <h2 style="color:#2E86AB;">{{role}}</h2>
+  
+  <section style="background:#F4F4F4; padding:10px; margin-top:10px;">
+    <h3>Summary</h3>
+    <p>{{summary}}</p>
+  </section>
+
+  <section style="background:#F4F4F4; padding:10px; margin-top:10px;">
+    <h3>Experience</h3>
+    <ul>
+      {{#each experiences}}
+        <li><strong>{{role}}</strong> at {{company}} ({{startDate}} - {{endDate}})</li>
+      {{/each}}
+    </ul>
+  </section>
+
+  <section style="background:#F4F4F4; padding:10px; margin-top:10px;">
+    <h3>Education</h3>
+    <ul>
+      {{#each education}}
+        <li>{{degree}} in {{fieldOfStudy}}, {{institute}}</li>
+      {{/each}}
+    </ul>
+  </section>
+
+  <h3>Skills</h3>
+  <p>{{skills}}</p>
+</div>

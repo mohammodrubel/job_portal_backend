@@ -8,7 +8,7 @@ export default {
   port: process.env.PORT,
 
   bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
-
+  gemini_api_key:process.env.GEMINI_API_KEY,
   jwt_access_token_secret: process.env.JWT_ACCESS_TOKEN_SECRET,
   jwt_access_token_expires_in: process.env.JWT_ACCESS_TOKEN_EXPIRES_IN,
 

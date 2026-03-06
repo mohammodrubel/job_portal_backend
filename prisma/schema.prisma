@@ -130,7 +130,7 @@ model User {
   postedJobs   Job[]            @relation("PostedBy")
   approvedJobs Job[]            @relation("ApprovedBy")
   reviewedApps JobApplication[] @relation("ReviewedBy")
-
+  aiResumes AiResume[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   lastLoginAt DateTime?
@@ -358,6 +358,27 @@ model Resume {
   @@index([type])
   @@index([isDefault])
   @@index([isPublic])
+  @@index([createdAt])
+}
+model AiResume {
+  id            String     @id @default(uuid())
+  userId        String
+  title         String
+  type          ResumeType   @default(AI_TEMPLATE_1)
+  content       String       // AI generated text content
+  pdfUrl        String?      // Optional, generated PDF file
+  isAiGenerated Boolean      @default(true)
+  aiModel       String?      // যেমন Gemini
+  aiVersion     String?      // AI version
+  tokensUsed    Int?
+  
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([type])
   @@index([createdAt])
 }
 

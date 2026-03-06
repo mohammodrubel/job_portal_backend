@@ -1,0 +1,29 @@
+<div style="font-family: Georgia, serif; display:flex; padding:20px;">
+  <div style="width:30%; padding-right:10px; border-right:1px solid #ccc;">
+    <h2>{{fullName}}</h2>
+    <h3>{{role}}</h3>
+    <h4>Skills</h4>
+    <p>{{skills}}</p>
+    <h4>Contact</h4>
+    <p>{{email}}<br/>{{phone}}</p>
+  </div>
+
+  <div style="width:70%; padding-left:10px;">
+    <h3>Experience</h3>
+    <ul>
+      {{#each experiences}}
+        <li><strong>{{role}}</strong> at {{company}} ({{startDate}} - {{endDate}})</li>
+      {{/each}}
+    </ul>
+
+    <h3>Education</h3>
+    <ul>
+      {{#each education}}
+        <li>{{degree}} in {{fieldOfStudy}}, {{institute}}</li>
+      {{/each}}
+    </ul>
+
+    <h3>Summary</h3>
+    <p>{{summary}}</p>
+  </div>
+</div>
