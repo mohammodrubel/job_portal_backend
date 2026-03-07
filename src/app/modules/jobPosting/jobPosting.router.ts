@@ -3,8 +3,6 @@ import { NextFunction, Request, Response, Router } from 'express';
 import auth from '../../middlewares/auth';
 import { Role } from '@prisma/client';
 import { JobPostController } from './jobPosting.controller';
-import validateRequest from '../../middlewares/validateRequest';
-import { JobZodSchema } from './jobPosting.validation';
 import { upload } from '../../utils/sendImageToCloudinary';
 
 const router = Router();
@@ -29,7 +27,6 @@ router.post(
 
 router.get(
   '/get-all-job',
-  // auth(Role.ADMIN, Role.MODERATOR, Role.RECRUITER, Role.USER),
   JobPostController.getAllJobPosts, 
 );
 router.get(

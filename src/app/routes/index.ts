@@ -7,6 +7,7 @@ import { educationRoutes } from '../modules/education/education.router';
 import { userExperienceRoutes } from '../modules/userExperience/userExperience.router';
 import { jobPostingRoutes } from '../modules/jobPosting/jobPosting.router';
 import { jobApplicationRouter } from '../modules/JobApplication/JobApplication.router';
+import { subscriptionPlanRouter } from '../modules/SubscriptionPlan/SubscriptionPlan.router';
 
 const router = express.Router();
 
@@ -48,6 +49,10 @@ const routes: Route[] = [
   {
     path: '/job-application',
     route: jobApplicationRouter,
+  },
+  {
+    path: '/subscription-plan',
+    route: subscriptionPlanRouter,
   },
  
  
