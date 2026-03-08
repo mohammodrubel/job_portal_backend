@@ -12,29 +12,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserService = void 0;
+exports.JobApplicationService = void 0;
 const prisma_1 = __importDefault(require("../../utils/prisma"));
-const GetAllUsers = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield prisma_1.default.user.findMany({});
-    return result;
-});
-const GetSingleUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield prisma_1.default.user.findUnique({
-        where: {
-            id: id,
-        },
+const applyJob = (userId, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield prisma_1.default.jobApplication.create({
+        data: Object.assign(Object.assign({}, payload), { userId: userId })
     });
     return result;
 });
-const DeleteUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    yield prisma_1.default.user.delete({
-        where: {
-            id: id,
-        },
-    });
+const getAllApply = () => __awaiter(void 0, void 0, void 0, function* () {
 });
-exports.UserService = {
-    GetAllUsers,
-    GetSingleUser,
-    DeleteUser,
+const getSingleJob = () => __awaiter(void 0, void 0, void 0, function* () { });
+const deleteJob = () => __awaiter(void 0, void 0, void 0, function* () { });
+exports.JobApplicationService = {
+    applyJob,
+    getAllApply,
+    getSingleJob,
+    deleteJob
 };

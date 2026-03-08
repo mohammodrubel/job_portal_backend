@@ -123,8 +123,8 @@ const getSingleJobPost = async (id: string) => {
     )
     return reuslt
 }
-const updateJobPost = async () => { }
-const deleteJobPost = async () => { }
+const updateJobPost = async (id:string,paylaod:Partial<Job>) => { }
+const deleteJobPost = async (id:string) => { }
 
 
 export const JobPostService = {

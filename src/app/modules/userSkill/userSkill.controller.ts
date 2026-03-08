@@ -16,7 +16,7 @@ const createSkill = catchAsync(async (req, res) => {
 
 // Get Single Skill by ID
 const getSingleSkill = catchAsync(async (req, res) => {
-  const result =await skillService.getSingleSkill(req.params?.id)
+  const result =await skillService.getSingleSkill(req.user?.id)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,

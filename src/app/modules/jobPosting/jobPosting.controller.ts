@@ -58,7 +58,7 @@ export const updateJobPost = catchAsync(async (req: Request, res: Response) => {
 
 // Delete Job Post
 export const deleteJobPost = catchAsync(async (req: Request, res: Response) => {
-    const { id } = req.params;
+    const id = req.params?.id;
     const result = await JobPostService.deleteJobPost(id);
     sendResponse(res, {
         success: true,

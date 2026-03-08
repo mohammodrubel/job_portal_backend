@@ -17,7 +17,7 @@ const LoginSchema = zod_1.z.object({
 });
 const RegisterSchema = zod_1.z.object({
     body: zod_1.z.object({
-        full_name: zod_1.z
+        fullName: zod_1.z
             .string({
             required_error: 'Full name is required',
             invalid_type_error: 'Full name must be a string',
@@ -37,11 +37,11 @@ const RegisterSchema = zod_1.z.object({
         })
             .min(6, 'Password must be at least 6 characters'),
         role: zod_1.z
-            .enum(['JOB_SEEKER', 'RECRUITER', 'ADMIN'], {
+            .enum(['USER', 'RECRUITER', 'ADMIN'], {
             invalid_type_error: 'Role must be either JOB_SEEKER, RECRUITER, or ADMIN',
-            message: 'Role is required and must be either JOB_SEEKER, RECRUITER, or ADMIN',
+            message: 'Role is required and must be either USER, RECRUITER, or ADMIN',
         })
-            .default('JOB_SEEKER'),
+            .default('USER'),
     }),
 });
 const ChangePasswordSchema = zod_1.z.object({

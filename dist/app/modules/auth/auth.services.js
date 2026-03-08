@@ -31,8 +31,10 @@ const Login = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     }
     const jwtPayload = {
         id: user.id,
+        name: user === null || user === void 0 ? void 0 : user.fullName,
         email: user.email,
         role: user.role,
+        ispublish: user.isPublish
     };
     const access_token = auth_utils_1.default.CreateToken(jwtPayload, config_1.default.jwt_access_token_secret, config_1.default.jwt_access_token_expires_in);
     const refresh_token = auth_utils_1.default.CreateToken(jwtPayload, config_1.default.jwt_refresh_token_secret, config_1.default.jwt_refresh_token_expires_in);
@@ -48,7 +50,7 @@ const Register = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const hashedPassword = yield bcrypt_1.default.hash(payload.password, Number(config_1.default.bcrypt_salt_rounds));
     const user = yield prisma_1.default.user.create({
         data: {
-            full_name: payload.full_name,
+            fullName: payload.fullName,
             email: payload.email,
             password: hashedPassword,
             role: payload.role,
@@ -56,8 +58,10 @@ const Register = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     });
     const jwtPayload = {
         id: user.id,
+        name: user === null || user === void 0 ? void 0 : user.fullName,
         email: user.email,
         role: user.role,
+        isPublish: user.isPublish
     };
     const access_token = auth_utils_1.default.CreateToken(jwtPayload, config_1.default.jwt_access_token_secret, config_1.default.jwt_access_token_expires_in);
     const refresh_token = auth_utils_1.default.CreateToken(jwtPayload, config_1.default.jwt_refresh_token_secret, config_1.default.jwt_refresh_token_expires_in);
