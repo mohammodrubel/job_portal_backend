@@ -130,7 +130,7 @@ model User {
   postedJobs   Job[]            @relation("PostedBy")
   approvedJobs Job[]            @relation("ApprovedBy")
   reviewedApps JobApplication[] @relation("ReviewedBy")
-  aiResumes AiResume[]
+  aiResumes GenerateResume[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   lastLoginAt DateTime?
@@ -336,18 +336,8 @@ model JobApplication {
 
 model Resume {
   id            String     @id @default(uuid())
-  userId        String
-  title         String
-  type          ResumeType
-  fileUrl       String
-  fileSize      Int?
-  fileType      String?
-  isDefault     Boolean @default(false)
-  isPublic      Boolean @default(false)
-  isAiGenerated Boolean @default(false)
-  aiTemplateId  String?
-  aiVersion     String?
-  
+  userId        String @unique
+  resume         String
   user         User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   applications JobApplication[]
   
@@ -355,33 +345,22 @@ model Resume {
   updatedAt DateTime @updatedAt
 
   @@index([userId])
-  @@index([type])
-  @@index([isDefault])
-  @@index([isPublic])
-  @@index([createdAt])
 }
-model AiResume {
+model GenerateResume {
   id            String     @id @default(uuid())
   userId        String
-  title         String
-  type          ResumeType   @default(AI_TEMPLATE_1)
-  content       String       // AI generated text content
-  pdfUrl        String?      // Optional, generated PDF file
-  isAiGenerated Boolean      @default(true)
-  aiModel       String?      // যেমন Gemini
-  aiVersion     String?      // AI version
-  tokensUsed    Int?
-  
-  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  resumeData    Json?      // এখানে JSON ডাটা রাখবে
+
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 
   @@index([userId])
-  @@index([type])
   @@index([createdAt])
+  @@map("generateResume")
 }
-
 model AiUsageLog {
   id         String @id @default(uuid())
   userId     String
@@ -476,8 +455,6 @@ model Payment {
   @@index([provider])
   @@index([createdAt])
 }
-
-
 
 ////////////////////
 /// MESSAGING
